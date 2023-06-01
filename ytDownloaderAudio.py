@@ -1,13 +1,25 @@
+# importing packages
 from pytube import YouTube
-from sys import argv
+import os
 
-link = argv[1]
-yt = YouTube(link)
+# url input from user
+yt = YouTube(
+	str(input("Enter the URL of the video you want to download: \n>> ")))
 
-print("Title: ", yt.title)
+# extract only audio
+video = yt.streams.filter(only_audio=True).first()
 
-print("View: ", yt.views)
+# check for destination to save file
+print("Enter the destination (leave blank for current directory)")
+destination = str(input(">> ")) or '.'
 
-yd = yt.streams()
+# download the file
+out_file = video.download(output_path=destination)
 
-yd.download("Users/lionelwirz/Downloads")
+# save the file
+base, ext = os.path.splitext(out_file)
+new_file = base + '.mp3'
+os.rename(out_file, new_file)
+
+# result of success
+print(yt.title + " has been successfully downloaded.")

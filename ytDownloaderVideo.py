@@ -1,13 +1,12 @@
 from pytube import YouTube
-from sys import argv
 
-link = argv[1]
-yt = YouTube(link)
-
-print("Title: ", yt.title)
-
-print("View: ", yt.views)
-
-yd = yt.streams()
-
-yd.download("Users/lionelwirz/Downloads")
+def download():
+    link = input("url: ")
+    yt = YouTube(link)
+    ys = yt.streams.get_highest_resolution()
+    print("downloading")
+    ys.download()
+    print("download complete")
+    download()
+ 
+download()
